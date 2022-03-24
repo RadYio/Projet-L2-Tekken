@@ -65,8 +65,6 @@ void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'
 
   initJoueur(j1, 300.0, "Shrekleouinouin", texture_joueur1, gauche);
   initJoueur(j2, 600.0, "PINGU", texture_joueur2, droite);
-  resetAnimation(j1); //Spawn du joueur
-  resetAnimation(j2);
   SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0); //Couleur des hitboxes
 
   init_sprite_pv(&rect_sprite_pv_j1, 1);
@@ -81,13 +79,24 @@ void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'
   init_afficher_nom_joueur(j1, font, &rect_sprite_pv_j1, &rect_nom_j1, &texture_nomj1,1);
   init_afficher_nom_joueur(j2, font, &rect_sprite_pv_j2, &rect_nom_j2, &texture_nomj2,2);
 
+  int sec_anim;
   while (!quit ) {
-    Uint8 *state = SDL_GetKeyboardState(NULL);
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
     sec_deb_combat = SDL_GetTicks()/1000;
+    sec_anim = SDL_GetTicks()/75;
     jouerAnimationBackground(&srcBg, &dstBg,1);
-    jouerAnimation(j1);
-    jouerAnimation(j2);
+
     deplacements(j1, j2);
+    jouerAnimation(j1,sec_anim);
+    jouerAnimation(j2,sec_anim);
+
+    if(j1->perso.frame==0){
+      jouerAnimationContinu(j1,sec_anim);
+    }
+    if(j2->perso.frame==0){
+      jouerAnimationContinu(j2,sec_anim);
+    }
+
     flag_perdu = checkPerdu(j1, j2);
     SDL_RenderClear(renderer);
     renderMap(&srcBg, &dstBg, renderer);

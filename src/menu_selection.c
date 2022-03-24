@@ -339,9 +339,7 @@ void menu_selection(){
     SDL_RenderCopy(renderer_menu_selection, texture_preview[num_map], &srcBg, &rect_bg_map);
     SDL_RenderCopy(renderer_menu_selection, texture_bouton_gauche, NULL, &rect_bouton_gauche);
     SDL_RenderCopy(renderer_menu_selection, texture_bouton_droit, NULL, &rect_bouton_droit);
-    //a voir
     SDL_RenderCopy(renderer_menu_selection, texture_fond_bg_preview,NULL, &rect_bg_map_fond);
-    //a voir
     SDL_RenderPresent(renderer_menu_selection);
   }
   //sdl destroy texture
