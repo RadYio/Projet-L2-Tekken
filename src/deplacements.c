@@ -18,7 +18,7 @@ typedef struct {
 } params;
 
 void sauter(Joueur * joueur){
-       Uint32 seconds = SDL_GetTicks() / 100; //Fréquence (toutes les 100ms)
+	Uint32 seconds = SDL_GetTicks() / 100; //Fréquence (toutes les 100ms)
 	Uint32 saut = seconds % 20;
 	if(estAuSol(joueur)){
 		joueur->position.y-=saut;
@@ -71,6 +71,7 @@ void deplacements(Joueur * j1, Joueur * j2, SDL_Event event) {
 				
 			case SDLK_e:
 				j1->action=IDLE;
+				j1->perso.frame=0;
 				
 			}
 			// event J2 
@@ -83,6 +84,7 @@ void deplacements(Joueur * j1, Joueur * j2, SDL_Event event) {
 				
 			case SDLK_KP_3:
 				j2->action=IDLE;
+				j2->perso.frame=0;
 				
 			}
 		}

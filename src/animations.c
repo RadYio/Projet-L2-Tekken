@@ -24,9 +24,6 @@ SDL_DisplayMode ecran;
 
 void renderAnimation(Joueur * joueur){
   SDL_RenderCopyEx(renderer, (joueur->texture), &(joueur->perso.srcrect), &(joueur->perso.dstrect), 0, 0, joueur->direction);
-  /*if(joueur->action==PARER){
-    printf("\nrender le pary");
-  }*/
 }
 
 
@@ -66,12 +63,6 @@ void jouerAnimation(Joueur * joueur,int seconds,Joueur * j2){
     default: /*printf("\nanim = %d",anim);*/return;
     break;
   }
-  /*if((joueur->perso.seconds)<seconds){
-    printf("\nseconds %d",seconds);
-    printf("\nseconds perso %d",joueur->perso.seconds);
-    printf("\nnb frame total %d",joueur->perso.nb_frame[anim]);
-  }*/
-  //Uint32 seconds = SDL_GetTicks() / 100; //Fréquence (toutes les 30ms)
 
 if((joueur->perso.seconds)<seconds){
     SDL_Rect srcrect = {
