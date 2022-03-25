@@ -14,13 +14,22 @@ SDL_DisplayMode ecran;
 
 void renderAnimation(Joueur * joueur){
   SDL_RenderCopyEx(renderer, (joueur->texture), &(joueur->perso.srcrect), &(joueur->perso.dstrect), 0, 0, joueur->direction);
-  if(joueur->action==PARER){
+  /*if(joueur->action==PARER){
     printf("\nrender le pary");
-  }
+  }*/
 }
 
 
-void jouerAnimation(Joueur * joueur,int seconds){
+void attaquer(Joueur * jAttaquant, Joueur * j2){
+	if(checkCollisions(jAttaquant, j2)){
+		if(j2->action!=PARER)
+			j2->vie-=20;
+	}
+}
+
+
+
+void jouerAnimation(Joueur * joueur,int seconds,Joueur * j2){
   int posYSprite;
   int anim=joueur->action;
 
@@ -74,7 +83,10 @@ if((joueur->perso.seconds)<seconds){
     joueur->perso.frame++;
     joueur->perso.seconds=seconds;
 
-    if(joueur->perso.frame == joueur->perso.nb_frame[anim] || joueur->perso.frame>25){
+    if(joueur->action==POING && joueur->perso.frame==(joueur->perso.nb_frame[anim]/2)){
+        attaquer(joueur,j2);
+      }
+    if(joueur->perso.frame == joueur->perso.nb_frame[anim] /*|| joueur->perso.frame>25*/){
       joueur->perso.frame=0;
       joueur->action=IDLE;
     }
@@ -130,7 +142,6 @@ void jouerAnimationContinu(Joueur * joueur,int seconds){
     joueur->perso.dstrect=dstrect;
 
     joueur->perso.frame=0;
-    anim=IDLE;
 }
 
 

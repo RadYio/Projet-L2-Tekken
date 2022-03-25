@@ -13,7 +13,7 @@
 #define PARER 8
 
 void renderAnimation(Joueur * joueur);
-void jouerAnimation(Joueur * joueur,int seconds);
+void jouerAnimation(Joueur * joueur,int seconds,Joueur * j2);
 void jouerAnimationContinu(Joueur * joueur,int seconds);
 void jouerAnimationBackground(SDL_Rect * srcBg, SDL_Rect * dstBg,int flag_bg);
 

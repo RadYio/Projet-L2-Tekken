@@ -87,8 +87,8 @@ void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'
     jouerAnimationBackground(&srcBg, &dstBg,1);
 
     deplacements(j1, j2);
-    jouerAnimation(j1,sec_anim);
-    jouerAnimation(j2,sec_anim);
+    jouerAnimation(j1,sec_anim,j2);
+    jouerAnimation(j2,sec_anim,j1);
 
     if(j1->perso.frame==0){
       jouerAnimationContinu(j1,sec_anim);
