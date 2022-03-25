@@ -13,10 +13,12 @@
 #include "../include/personnages.h"
 #include "../include/map.h"
 #include "../include/gui.h"
+#include "../include/pause.h"
 
 #define MODE BORDERLESS
 int sec_deb_combat,ancien_temps=-1;
 bool quit;
+bool pause=false;
 SDL_DisplayMode ecran;
 
 void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'environnement (pour l'instant)
@@ -78,15 +80,28 @@ void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'
 
   init_afficher_nom_joueur(j1, font, &rect_sprite_pv_j1, &rect_nom_j1, &texture_nomj1,1);
   init_afficher_nom_joueur(j2, font, &rect_sprite_pv_j2, &rect_nom_j2, &texture_nomj2,2);
+  
+  initPause();
 
   int sec_anim;
+
   while (!quit ) {
-    const Uint8 *state = SDL_GetKeyboardState(NULL);
+    SDL_Event event;
+
+	  SDL_PollEvent(&event);
     sec_deb_combat = SDL_GetTicks()/1000;
     sec_anim = SDL_GetTicks()/75;
     jouerAnimationBackground(&srcBg, &dstBg,1);
+    
+    switch (event.type) {
+    case SDL_KEYDOWN:
+		switch (event.key.keysym.sym) {
+		case SDLK_ESCAPE:
+		  pause = !pause;
+		break;
+    }
+  }
 
-    deplacements(j1, j2);
     jouerAnimation(j1,sec_anim,j2);
     jouerAnimation(j2,sec_anim,j1);
 
@@ -110,8 +125,14 @@ void initSdl(Joueur * j1, Joueur * j2, int num_map) { //Créer la fenêtre et l'
 
     SDL_RenderCopy(renderer, texture_nomj1, NULL ,&rect_nom_j1);
     SDL_RenderCopy(renderer, texture_nomj2, NULL ,&rect_nom_j2);
+
+    if(!pause)
+      deplacements(j1, j2, event);
+    else {
+      selectionPause(event);
+      renderPause();
+    }
     SDL_RenderPresent(renderer);
-    quit = flag_perdu!=0 || sec_deb_combat >59 || state[SDL_SCANCODE_ESCAPE];
   }
 
   if(flag_perdu == 1)

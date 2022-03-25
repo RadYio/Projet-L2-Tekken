@@ -18,22 +18,21 @@ typedef struct {
 } params;
 
 void sauter(Joueur * joueur){
-        /*if(joueur->action==SAUTER)
-           if(estTropHaut(joueur))
-              if(!estAuSol(joueur))
-	         joueur->position.y -= 1.5;
-	   else
-	         joueur->position.y += 1.5;*/
+       Uint32 seconds = SDL_GetTicks() / 100; //Fréquence (toutes les 100ms)
+	Uint32 saut = seconds % 20;
+	if(estAuSol(joueur)){
+		joueur->position.y-=saut;
+	} else if (estTropHaut(joueur)){
+		joueur->position.y+=saut;
+	}
 }
 
 
 
-void deplacements(Joueur * j1, Joueur * j2) {
+void deplacements(Joueur * j1, Joueur * j2, SDL_Event event) {
 	hitbox(j1);
 	hitbox(j2);
 	direction(j1, j2);
-	SDL_Event event;
-	SDL_PollEvent(&event);
 
 	switch (event.type) {
 		case SDL_QUIT:
@@ -90,9 +89,6 @@ void deplacements(Joueur * j1, Joueur * j2) {
 		break;
 	}
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
-	if (state[SDL_SCANCODE_ESCAPE]) {
-		quit=true;
-	}
 	/* verif touches J1 */
 	if(j1->perso.frame==0){
 		if (state[SDL_SCANCODE_A]) { //recule : touche q

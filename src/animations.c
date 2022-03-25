@@ -1,3 +1,13 @@
+/**
+ * @file animations.c
+ * @author Charly.P Alexis.G Léo.N
+ * @brief Fichier contenant les fonctions en relation avec les variables d'animations
+ * @version 1.0
+ * @date 2022-03-22
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -53,7 +63,7 @@ void jouerAnimation(Joueur * joueur,int seconds,Joueur * j2){
     break;
     case PARER: return;
     break;
-    default: printf("\nanim = %d",anim);return;
+    default: /*printf("\nanim = %d",anim);*/return;
     break;
   }
   /*if((joueur->perso.seconds)<seconds){
@@ -90,7 +100,7 @@ if((joueur->perso.seconds)<seconds){
       joueur->perso.frame=0;
       joueur->action=IDLE;
     }
-    printf("\nframe ************************* %d",joueur->perso.frame);
+    //printf("\nframe ************************* %d",joueur->perso.frame);
   }
 }
 
